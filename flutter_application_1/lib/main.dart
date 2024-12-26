@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'pantalla_iniciar_sesion.dart';
 
@@ -6,7 +7,7 @@ void main() {
 }
 
 class MiAplicacion extends StatelessWidget {
-  const MiAplicacion({Key? key}) : super(key: key);
+  const MiAplicacion({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,6 @@ class MiAplicacion extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // Elimina const aquí
       home: PantallaIniciarSesion(),
       debugShowCheckedModeBanner: false,
     );

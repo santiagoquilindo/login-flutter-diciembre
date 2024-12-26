@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'pantalla_registrar_usuario.dart';
 
 class PantallaIniciarSesion extends StatelessWidget {
-  // Constructor con parámetro key (sin 'const')
-  PantallaIniciarSesion({Key? key}) : super(key: key);
+  PantallaIniciarSesion({super.key});
 
   final TextEditingController controladorCorreo = TextEditingController();
+  final TextEditingController controladorContrasena = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +26,39 @@ class PantallaIniciarSesion extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Acción de "Olvidar correo"
-                print('Función para recuperar correo.');
-              },
-              child: const Text('¿Olvidó su correo?'),
+            TextField(
+              controller: controladorContrasena,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Contraseña',
+                border: OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navegar a la pantalla de registro
+                if (controladorCorreo.text.isEmpty ||
+                    controladorContrasena.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Por favor completa los campos')),
+                  );
+                } else {
+                  debugPrint('Correo: ${controladorCorreo.text}');
+                  debugPrint('Contraseña: ${controladorContrasena.text}');
+                }
+              },
+              child: const Text('Iniciar Sesión'),
+            ),
+            TextButton(
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PantallaRegistrarUsuario()),
+                    builder: (context) => const PantallaRegistrarUsuario(),
+                  ),
                 );
               },
-              child: const Text('Registrar Usuario'),
+              child: const Text('¿No tienes cuenta? Regístrate'),
             ),
           ],
         ),
@@ -51,3 +66,4 @@ class PantallaIniciarSesion extends StatelessWidget {
     );
   }
 }
+

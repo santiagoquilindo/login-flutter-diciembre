@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'app_styles.dart';
 
 class PantallaRegistrarUsuario extends StatefulWidget {
-  // Constructor con parámetro key
-  const PantallaRegistrarUsuario({Key? key}) : super(key: key);
+  const PantallaRegistrarUsuario({super.key});
 
   @override
-  _PantallaRegistrarUsuarioState createState() =>
+  State<PantallaRegistrarUsuario> createState() =>
       _PantallaRegistrarUsuarioState();
 }
 
 class _PantallaRegistrarUsuarioState extends State<PantallaRegistrarUsuario> {
-  final TextEditingController controladorNombre = TextEditingController();
-  final TextEditingController controladorApellido = TextEditingController();
-  final TextEditingController controladorFicha = TextEditingController();
+  final TextEditingController nombreController = TextEditingController();
+  final TextEditingController apellidoController = TextEditingController();
+  final TextEditingController fichaController = TextEditingController();
 
   String? programaSeleccionado;
   final List<String> programas = ['CTPI', 'Agro'];
@@ -29,28 +29,19 @@ class _PantallaRegistrarUsuarioState extends State<PantallaRegistrarUsuario> {
           child: Column(
             children: [
               TextField(
-                controller: controladorNombre,
-                decoration: const InputDecoration(
-                  labelText: 'Nombre',
-                  border: OutlineInputBorder(),
-                ),
+                controller: nombreController,
+                decoration: AppStyles.inputDecoration('Nombre'),
               ),
               const SizedBox(height: 15),
               TextField(
-                controller: controladorApellido,
-                decoration: const InputDecoration(
-                  labelText: 'Apellido',
-                  border: OutlineInputBorder(),
-                ),
+                controller: apellidoController,
+                decoration: AppStyles.inputDecoration('Apellido'),
               ),
               const SizedBox(height: 15),
               TextField(
-                controller: controladorFicha,
+                controller: fichaController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Número de Ficha',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: AppStyles.inputDecoration('Número de Ficha'),
               ),
               const SizedBox(height: 15),
               DropdownButtonFormField<String>(
@@ -66,19 +57,24 @@ class _PantallaRegistrarUsuarioState extends State<PantallaRegistrarUsuario> {
                     programaSeleccionado = nuevoValor;
                   });
                 },
-                decoration: const InputDecoration(
-                  labelText: 'Programa',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: AppStyles.inputDecoration('Programa'),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Acción para registrar el usuario
-                  print('Nombre: ${controladorNombre.text}');
-                  print('Apellido: ${controladorApellido.text}');
-                  print('Ficha: ${controladorFicha.text}');
-                  print('Programa: $programaSeleccionado');
+                  if (nombreController.text.isEmpty ||
+                      apellidoController.text.isEmpty ||
+                      fichaController.text.isEmpty ||
+                      programaSeleccionado == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Por favor completa los campos')),
+                    );
+                  } else {
+                    debugPrint('Nombre: ${nombreController.text}');
+                    debugPrint('Apellido: ${apellidoController.text}');
+                    debugPrint('Ficha: ${fichaController.text}');
+                    debugPrint('Programa: $programaSeleccionado');
+                  }
                 },
                 child: const Text('Registrar'),
               ),
